@@ -1,8 +1,11 @@
 <script>
+export default {
+    methods: {}
+}
 </script>
 
 <template>
-    <div class="card flex-shrink-0 w-5/12  shadow-2xl bg-base-100">
+    <div class="card flex-shrink-0 w-5/12  shadow-xl bg-base-100">
         <form class="card-body">
             <div class="form-control">
                 <label class="label">
@@ -40,8 +43,11 @@
                 </label>
                 <input type="text" placeholder="Address" class="input input-bordered" />
             </div>
-            <div class="form-control mt-3">
+            <div class="form-control mt-3" v-if="this.$route.name == 'addPatient'">
                 <button class="btn btn-primary">Add Patient</button>
+            </div>
+            <div class="form-control mt-3" v-else>
+                <button class="btn btn-primary">Edit Patient</button>
             </div>
         </form>
     </div>

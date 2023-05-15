@@ -13,7 +13,7 @@ export default {
 </script>
     
 <template>
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto shadow-2xl">
         <table class="table w-full">
             <!-- head -->
             <thead>

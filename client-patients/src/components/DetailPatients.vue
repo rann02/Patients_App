@@ -17,7 +17,7 @@ import { RouterLink, RouterView } from 'vue-router'
                     <h1 class="text-3xl font-bold">Patient Detail</h1>
                     <RouterLink to="/" class="btn btn-primary pad">Back</RouterLink>
                 </div>
-                <table class="mt-5 table w-5/12">
+                <table class="mt-5 table w-5/12 shadow-xl">
                     <tbody>
                         <tr>
                             <td class="text-sky-600">Name</td>
