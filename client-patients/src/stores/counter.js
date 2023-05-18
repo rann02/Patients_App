@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const usePatientsStore = defineStore('counter', {
   state: () => ({
@@ -27,7 +28,6 @@ export const usePatientsStore = defineStore('counter', {
           method: 'get',
           url: `http://localhost:8080/api/patients/${id}`
         })
-        console.log(data);
         this.patient = data.result
       } catch (error) {
         console.log(error);
@@ -40,9 +40,24 @@ export const usePatientsStore = defineStore('counter', {
           url: 'http://localhost:8080/api/patients',
           data: patientForm
         })
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          toast: true,
+          title: `${data.status.message}`,
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.router.push('/')
-        console.log(data);
       } catch (error) {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'info',
+          toast: true,
+          title: `${error.response.data.status.messages[0]}`,
+          showConfirmButton: false,
+          timer: 2000
+        })
         console.log(error);
       }
     },
@@ -52,8 +67,15 @@ export const usePatientsStore = defineStore('counter', {
           method: 'delete',
           url: `http://localhost:8080/api/patients/${id}`
         })
-        this.getAll()
-        console.log(data);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          toast: true,
+          title: `${data.status.message}`,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        await this.getAll()
       } catch (error) {
         console.log(error);
       }
@@ -65,9 +87,24 @@ export const usePatientsStore = defineStore('counter', {
           url: `http://localhost:8080/api/patients/${patient.id}`,
           data: patient.patientForm
         })
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          toast: true,
+          title: `${data.status.message}`,
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.router.push('/')
-        console.log(data);
       } catch (error) {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'info',
+          toast: true,
+          title: `${error.response.data.status.messages[0]}`,
+          showConfirmButton: false,
+          timer: 2000
+        })
         console.log(error);
       }
     },
