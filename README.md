@@ -4,7 +4,7 @@
 - Menggunakan VUE 3
 
 # query membuat database, dan table
-<!-- 
+
 CREATE DATABASE patientDB;
 
 USE patientDB; 
@@ -19,4 +19,3 @@ CREATE TABLE Patient (
     address varchar(255),
     PRIMARY KEY (id)
 ); 
- -->
