@@ -27,10 +27,49 @@ export const usePatientsStore = defineStore('counter', {
           method: 'get',
           url: `http://localhost:8080/api/patients/${id}`
         })
+        console.log(data);
         this.patient = data.result
       } catch (error) {
         console.log(error);
       }
-    }
+    },
+    async postPatient(patientForm) {
+      try {
+        const { data } = await axios({
+          method: 'post',
+          url: 'http://localhost:8080/api/patients',
+          data: patientForm
+        })
+        this.router.push('/')
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async deletePatient(id) {
+      try {
+        const { data } = await axios({
+          method: 'delete',
+          url: `http://localhost:8080/api/patients/${id}`
+        })
+        this.getAll()
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async putPatient(patient) {
+      try {
+        const { data } = await axios({
+          method: 'put',
+          url: `http://localhost:8080/api/patients/${patient.id}`,
+          data: patient.patientForm
+        })
+        this.router.push('/')
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 })

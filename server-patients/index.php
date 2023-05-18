@@ -34,28 +34,25 @@ $container->set(
 
 $app = new Micro($container);
 
-$response = $app->response;                      
-$response->setHeader('Access-Control-Allow-Origin', '*');
-$response->setHeader('Access-Control-Allow-Headers', 'X-Requested-With');      
-$response->sendHeaders();
+$app->before(
+    function () use ($app) {
+    
+        $origin = $app->request->getHeader("ORIGIN") ? $app->request->getHeader("ORIGIN") : '*';
+    
+        $app->response->setHeader("Access-Control-Allow-Origin", $origin)
+            ->setHeader("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE,OPTIONS')
+            ->setHeader("Access-Control-Allow-Headers", 'Origin, X-Requested-With, Content-Range, Content-Disposition, Content-Type, Authorization')
+            ->setHeader("Access-Control-Allow-Credentials", true);
 
-$app->get('/preflight', function() use ($app) {
-    $content_type = 'application/json';
-    $status = 200;
-    $description = 'OK';
-    $response = $app->response;
+        $app->response->sendHeaders();     
+    
+        return true;
+    });
 
-    $status_header = 'HTTP/1.1 ' . $status . ' ' . $description;
-    $response->setRawHeader($status_header);
-    $response->setStatusCode($status, $description);
-    $response->setContentType($content_type, 'UTF-8');
-    $response->setHeader('Access-Control-Allow-Origin', '*');
-    $response->setHeader('Access-Control-Allow-Headers', 'X-Requested-With');
-    $response->setHeader("Access-Control-Allow-Headers: Authorization");
-    $response->setHeader('Content-type: ' . $content_type);
-    $response->sendHeaders();
-});
-
+    $app->options('/{catch:(.*)}', function() use ($app) { 
+        $app->response->setStatusCode(200, "OK")->send();
+    });
+    
 $app->get(
     '/api/patients',
     function () use ($app) {
@@ -193,7 +190,7 @@ $app->post(
                         'response' => "success",
                         'message' => "success create new patient"
                     ],
-                    'result'   => $patient,
+                    'result' => $patient,
                 ]
             );
         } else {

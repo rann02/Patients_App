@@ -1,5 +1,5 @@
 <script>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { mapActions, mapState } from 'pinia'
 import { usePatientsStore } from '../stores/counter'
 export default {

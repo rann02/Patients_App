@@ -9,12 +9,15 @@ export default {
         ...mapState(usePatientsStore, ['patients'])
     },
     methods: {
-        ...mapActions(usePatientsStore, ['getAll']),
-        toEdit() {
-            this.$router.push("/edit/1")
+        ...mapActions(usePatientsStore, ['getAll', 'deletePatient']),
+        toEdit(id) {
+            this.$router.push(`/edit/${id}`)
         },
         toDetail(id) {
             this.$router.push(`/detail/${id}`)
+        }, 
+        async handleDelete(id) {
+            await this.deletePatient(id)
         }
     }
 }
@@ -43,10 +46,10 @@ export default {
                     <td>{{ patient.sex }}</td>
                     <td>
                         <div class="action">
-                            <button>
+                            <button @click.stop="()=> handleDelete(patient.id)">
                                 <i class="fa-solid fa-trash" style="color: #dc2626; width: 20px;"></i>
                             </button>
-                            <button @click.stop="toEdit">
+                            <button @click.stop="() => toEdit(patient.id)">
                                 <i class="fa-solid fa-user-pen" style="color: #0ea5e9; width: 20px;"></i>
                             </button>
                         </div>
