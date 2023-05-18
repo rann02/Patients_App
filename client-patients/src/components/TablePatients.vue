@@ -1,11 +1,20 @@
 <script>
+import { mapActions, mapState } from 'pinia'
+import { usePatientsStore } from '../stores/counter'
 export default {
+    created() {
+        this.getAll()
+    },
+    computed: {
+        ...mapState(usePatientsStore, ['patients'])
+    },
     methods: {
+        ...mapActions(usePatientsStore, ['getAll']),
         toEdit() {
             this.$router.push("/edit/1")
         },
-        toDetail() {
-            this.$router.push("/detail/1")
+        toDetail(id) {
+            this.$router.push(`/detail/${id}`)
         }
     }
 }
@@ -27,45 +36,11 @@ export default {
             </thead>
             <tbody>
                 <!-- row 1 -->
-                <tr class="hover" @click="toDetail">
-                    <th>1</th>
-                    <td>Cy Ganderton</td>
-                    <td>Quality Control Specialist</td>
-                    <td>Blue</td>
-                    <td>
-                        <div class="action">
-                            <button>
-                                <i class="fa-solid fa-trash" style="color: #dc2626; width: 20px;"></i>
-                            </button>
-                            <button @click.stop="toEdit">
-                                <i class="fa-solid fa-user-pen" style="color: #0ea5e9; width: 20px;"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <!-- row 2 -->
-                <tr class="hover">
-                    <th>2</th>
-                    <td>Hart Hagerty</td>
-                    <td>Desktop Support Technician</td>
-                    <td>Purple</td>
-                    <td>
-                        <div class="action">
-                            <button>
-                                <i class="fa-solid fa-trash" style="color: #dc2626; width: 20px;"></i>
-                            </button>
-                            <button @click.stop="toEdit">
-                                <i class="fa-solid fa-user-pen" style="color: #0ea5e9; width: 20px;"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <!-- row 3 -->
-                <tr class="hover">
-                    <th>3</th>
-                    <td>Brice Swyre</td>
-                    <td>Tax Accountant</td>
-                    <td>Red</td>
+                <tr class="hover" @click="() => toDetail(patient.id)" v-for="(patient, index) in patients" :key="index">
+                    <th>{{ index+1 }}</th>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.nik }}</td>
+                    <td>{{ patient.sex }}</td>
                     <td>
                         <div class="action">
                             <button>

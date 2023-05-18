@@ -1,6 +1,18 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
-
+import { mapActions, mapState } from 'pinia'
+import { usePatientsStore } from '../stores/counter'
+export default {
+    created() {
+        this.getOne(this.$route.params.id)
+    },
+    computed: {
+        ...mapState(usePatientsStore, ['patient'])
+    },
+    methods: {
+        ...mapActions(usePatientsStore, ['getOne']),
+    }
+}
 </script>
 
 <template>
@@ -21,27 +33,27 @@ import { RouterLink, RouterView } from 'vue-router'
                     <tbody>
                         <tr>
                             <td class="text-sky-600">Name</td>
-                            <td>Maria Anders</td>
+                            <td>{{ patient.name }}</td>
                         </tr>
                         <tr>
                             <td class="text-sky-600">NIK</td>
-                            <td>Francisco Chang</td>
+                            <td>{{ patient.nik }}</td>
                         </tr>
                         <tr>
                             <td class="text-sky-600">Sex</td>
-                            <td>Francisco Chang</td>
+                            <td>{{ patient.sex }}</td>
                         </tr>
                         <tr>
                             <td class="text-sky-600">Religion</td>
-                            <td>Francisco Chang</td>
+                            <td>{{ patient.religion }}</td>
                         </tr>
                         <tr>
                             <td class="text-sky-600">Phone</td>
-                            <td>Francisco Chang</td>
+                            <td>{{ patient.phone }}</td>
                         </tr>
                         <tr>
                             <td class="text-sky-600">Address</td>
-                            <td>Francisco Chang</td>
+                            <td>{{ patient.address }}</td>
                         </tr>
                     </tbody>
                 </table>

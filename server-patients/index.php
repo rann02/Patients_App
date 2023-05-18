@@ -34,6 +34,28 @@ $container->set(
 
 $app = new Micro($container);
 
+$response = $app->response;                      
+$response->setHeader('Access-Control-Allow-Origin', '*');
+$response->setHeader('Access-Control-Allow-Headers', 'X-Requested-With');      
+$response->sendHeaders();
+
+$app->get('/preflight', function() use ($app) {
+    $content_type = 'application/json';
+    $status = 200;
+    $description = 'OK';
+    $response = $app->response;
+
+    $status_header = 'HTTP/1.1 ' . $status . ' ' . $description;
+    $response->setRawHeader($status_header);
+    $response->setStatusCode($status, $description);
+    $response->setContentType($content_type, 'UTF-8');
+    $response->setHeader('Access-Control-Allow-Origin', '*');
+    $response->setHeader('Access-Control-Allow-Headers', 'X-Requested-With');
+    $response->setHeader("Access-Control-Allow-Headers: Authorization");
+    $response->setHeader('Content-type: ' . $content_type);
+    $response->sendHeaders();
+});
+
 $app->get(
     '/api/patients',
     function () use ($app) {
@@ -58,6 +80,7 @@ $app->get(
                 'religion' => $patient->religion,
                 'phone' => $patient->phone,
                 'nik' => $patient->nik,
+                'address' => $patient->address
             ];
         }
 
@@ -121,6 +144,7 @@ $app->get(
                         'religion' => $patient->religion,
                         'phone' => $patient->phone,
                         'nik' => $patient->nik,
+                        'address' => $patient->address
                     ]
                 ]
             );
@@ -135,9 +159,9 @@ $app->post(
     function () use ($app) {
         $patient = $app->request->getJsonRawBody();
         $phql  = 'INSERT INTO MyApp\Models\Patient '
-               . '(name, sex, religion, phone, nik) '
+               . '(name, sex, religion, phone, nik, address) '
                . 'VALUES '
-               . '(:name:, :sex:, :religion:, :phone:, :nik:)'
+               . '(:name:, :sex:, :religion:, :phone:, :nik:, :address:)'
         ;
 
         $status = $app
@@ -150,6 +174,7 @@ $app->post(
                     'religion' => $patient->religion,
                     'phone' => $patient->phone,
                     'nik' => $patient->nik,
+                    'address' => $patient->address
                 ]
             )
         ;
@@ -200,7 +225,7 @@ $app->put(
     function ($id) use ($app) {
         $patient = $app->request->getJsonRawBody();
         $phql  = 'UPDATE MyApp\Models\Patient '
-               . 'SET name = :name:, sex = :sex:, religion = :religion:, phone = :phone:, nik = :nik: '
+               . 'SET name = :name:, sex = :sex:, religion = :religion:, phone = :phone:, nik = :nik:, address = :address: '
                . 'WHERE id = :id:';
 
         $status = $app
@@ -214,6 +239,7 @@ $app->put(
                     'religion' => $patient->religion,
                     'phone' => $patient->phone,
                     'nik' => $patient->nik,
+                    'address' => $patient->address
                 ]
             )
         ;

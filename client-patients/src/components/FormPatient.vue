@@ -1,6 +1,10 @@
 <script>
+import { mapActions } from 'pinia'
+import { usePatientsStore } from '../stores/counter'
 export default {
-    methods: {}
+    methods: {
+        ...mapActions(usePatientsStore, [''])
+    }
 }
 </script>
 
