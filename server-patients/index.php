@@ -249,7 +249,7 @@ $app->put(
                     'status'   => [
                         'code' => 200,
                         'response' => "success",
-                        'message' => "success update data"
+                        'message' => "success update patient"
                     ],
                     'result'   => $patient,
                 ]
@@ -303,7 +303,7 @@ $app->delete(
                     'status'   => [
                         'code' => 200,
                         'response' => "success",
-                        'messages' => "success delete data",
+                        'message' => "success delete patient",
                     ],
                     'result' => ''
                 ]
