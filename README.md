@@ -5,11 +5,11 @@
 
 # query membuat database, dan table
 
-CREATE DATABASE patientDB;
+- CREATE DATABASE patientDB;
 
-USE patientDB; 
+- USE patientDB; 
 
-CREATE TABLE Patient (
+- CREATE TABLE Patient (
     id int NOT NULL AUTO_INCREMENT,
     name varchar(255) NOT NULL,
     sex varchar(255),
@@ -19,3 +19,11 @@ CREATE TABLE Patient (
     address varchar(255),
     PRIMARY KEY (id)
 ); 
+
+# Alur aplikasi
+- Patient List
+Berisikan list seluruh pasien, dengan melakukan klik pada list akan mengarahkan ke halaman detail pasien. Terdapat 2 tombola action:
+    1. Delete: Untuk menghapus pasien
+    2. Edit: Untuk mengubah data pasien
+- New patient
+Memuat form untuk menginput pasien baru.
